@@ -75,14 +75,16 @@ class MarkerManager {
     const selectedOption = getSelectedOption();
     if (selectedOption === "Event") {
       return new H.map.Icon(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/></svg>'
+        '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M1.604 24c1.853-2.784 7.647-8.21 13.919-9.494l.525 3.276c-3.773.264-9.01 2.523-14.444 6.218zm-1.604-1c2.037-2.653 6.013-6.906 6.226-15.092l-3.271.561c.418 4.888-1.546 10.626-2.955 14.531zm20.827-11.423l.802 2.4 2.371.883-2.035 1.504-.107 ' +
+        '2.528-2.06-1.471-2.437.68.763-2.413-1.4-2.109 2.531-.02 1.572-1.982zm-11.911 3.677h-.018c-.268 0-.49-.213-.499-.483-.098-2.877.511-4.87 3.798-5.24 1.953-.219 2.029-1.116 2.135-2.357.099-1.171.235-2.775 2.737-2.959 1.23-.09 1.908-.307 2.267-.725.407-.475.528-1.357.403-2.948-.022-.275.184-.516.459-.538.254-.019.516.184.537.46.151 1.906-.035 2.972-.64 ' +
+        '3.678-.556.647-1.411.957-2.953 1.07-1.651.122-1.712.846-1.814 2.046-.106 1.247-.251 2.956-3.02 3.267-2.33.262-3.011 1.247-2.91 4.212.01.276-.207.507-.482.517zm12.084-9.254c1.104 0 2 .896 2 2s-.896 2-2 2-2-.896-2-2 .896-2 2-2zm-13.715-4.058l-2.531.017-1.601-1.959-.766 2.412-2.359.918 2.058 1.473.144 2.527 2.037-1.501 2.447.643-.798-2.401 1.369-2.129zm3.715.058c1.104 0 ' +
+        '2 .896 2 2s-.896 2-2 2-2-.896-2-2 .896-2 2-2z"/></svg>'
         );
     }
     else if (selectedOption === "Suspicious Activity") {
       return new H.map.Icon(
-        '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="red" viewBox="0 0 24 24">' +
-        '<path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>' +
-        '</svg>'
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 ' +
+        '1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/></svg>'
         );
     }
     else if (selectedOption === "Lost Item") {
@@ -107,7 +109,7 @@ async function loadPins(markerManager) {
     const response = await fetch('/api/pins');
     const pins = await response.json();
     pins.forEach(pin => {
-      markerManager.placeMarker(pin.lat, pin.lng, null);
+      markerManager.placeMarker(pin.lat, pin.lng, null, pin.logo);
     });
   } catch (error) {
     console.error("Failed to load pins:", error);
@@ -115,14 +117,14 @@ async function loadPins(markerManager) {
 }
 
 // Saves a pin to the database
-async function savePin(lat, lng) {
+async function savePin(lat, lng, logo) {
   try {
     const response = await fetch('/api/pins', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ lat, lng, userId: 'user123' }) // Replace with actual user ID if needed
+      body: JSON.stringify({ lat, lng, userId: 'user123', logo }) // Replace with actual user ID if needed
     });
     const newPin = await response.json();
     console.log("New pin saved:", newPin);

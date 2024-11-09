@@ -43,7 +43,7 @@ app.post('/api/pins', async (req, res) => {
               console.log("Oldest pin removed:", oldestPin[0]._id);
             }
           }
-        const newPin = await db.collection('pins').insertOne({ lat, lng, timestamp });
+        const newPin = await db.collection('pins').insertOne({ lat, lng, timestamp, logo});
         res.json(newPin);
     } catch (error) {
         console.error("Error adding pin:", error);
