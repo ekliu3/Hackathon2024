@@ -1,4 +1,4 @@
-let apiKey;
+let HERE_API_KEY;
 
 // Fetch API key from server-side
 
@@ -11,7 +11,7 @@ let apiKey;
 class MapManager{
   constructor(apiKey, containerId) {
     this.platform = new H.service.Platform({
-        apikey: apiKey
+        apiKey: apiKey
     });
     this.defaultLayers = this.platform.createDefaultLayers();
     // Initialize the map centered over UMASS
@@ -72,18 +72,30 @@ class MarkerManager {
   }
 
   pinIcon() {
-    let selectedColor ="red"
-    // if (getSelectedOption() == Event) {
-    //   selectedColor = "blue"
-    // }
-    // if (getSelectedOption() == Event) {
-    //   selectedColor = "green"
-    // }
-    // if (getSelectedOption() == Event) {
-    //   selectedColor = "yellow"
-    // }
+    const selectedOption = getSelectedOption();
+    if (selectedOption === "Event") {
+      return new H.map.Icon(
+        '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="black" viewBox="0 0 24 24">' +
+        '<path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>' +
+        '</svg>'
+        );
+    }
+    else if (selectedOption === "Suspicious Activity") {
+      return new H.map.Icon(
+        '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="blue" viewBox="0 0 24 24">' +
+        '<path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>' +
+        '</svg>'
+        );
+    }
+    else if (selectedOption === "Lost Item") {
+      return new H.map.Icon(
+        '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="green" viewBox="0 0 24 24">' +
+        '<path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>' +
+        '</svg>'
+        );
+    }
     return new H.map.Icon(
-    '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="red" viewBox="0 0 24 24">' +
+    '<svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke="black" fill="grey" viewBox="0 0 24 24">' +
     '<path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>' +
     '</svg>'
     );
@@ -155,14 +167,12 @@ window.onload = function () {
 };
 
 function getSelectedOption() {
-  const options = document.getElementsByName("option")
+  const options = document.getElementsByName("pinType")
 
-  let selectedValue = null;
-
-  for (const option of option) {
+  for (const option of options) {
     if (option.checked) {
-      selectedValue = option.value;
-      break;
+      return option.value;
     }
   }
+  return null;
 }

@@ -58,17 +58,17 @@
     <!-- end of menu -->
 
     <!-- Adds buttons to for placing pin type-->
-    <form action="/action_page.php">
+    <form id = "myForm">
       <p>Which type of pin would you like to place?</p>
-      <input type="radio" id="option" name="pinType" value="Lost Item">
-      <label for="Lost Item">Lost Item</label>
-      <input type="radio" id="option" name="pinType" value="Suspicious Activity">
-      <label for="Suspicious Activity">Suspicious Activity</label>
-      <input type="radio" id="option" name="pinType" value="Event">
-      <label for="Event">Event</label>
+      <input type="radio" id="lostItem" name="pinType" value="Lost Item">
+      <label for="lostItem">Lost Item</label>
+      <input type="radio" id="suspiciousActivity" name="pinType" value="Suspicious Activity">
+      <label for="suspiciousActivity">Suspicious Activity</label>
+      <input type="radio" id="event" name="pinType" value="Event">
+      <label for="event">Event</label>
     </form>
-    <button onclick = "getSelectedOption()">Submit</button>
-    <p id="output"></p>
+    <!-- <button onclick = "getSelectedOption()">Submit</button>
+    <p id="output"></p> -->
     <!-- end of button -->
 
     <br><div id="map"></div>

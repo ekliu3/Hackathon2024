@@ -35,10 +35,14 @@ transition: 0.3s;
 color: white;
 }
 
-.navbar ul
+.navbar
 {
-    list-style-type: none;
     background-color: maroon;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2
     padding: 0.5px;
     margin: 0px;
     display: block;
