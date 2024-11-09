@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+    <title>WhatsUpUMass</title>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+	   type="text/javascript" charset="utf-8"></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+	   type="text/javascript" charset="utf-8"></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"
+	   type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body 
+    id="markers-on-the-map">
+    <body style = "background-color:rgb(210, 215, 219)">
+    <div class="page-header">
+        <div id="alert-warning" style="display:none;">
+  <span id="alert" onclick="this.parentElement.style.display='none';">&times;</span>
+  <strong>Warning!</strong><br>Please paste your apiKey in the Javascript code.
+</div>
+        <h1 style = "font-family: Impact; font-size: 50; color: rgb(180, 42, 42)">What's Up UMass</h1>
+        <nav class = "navbar">
+          <div class = "navbar__container">
+            <a href = "#home" id = "navbar__logo">What's Up UMass</a>
+            <div class = "navbar__links" id = "mobile-menu">
+              <span class = "bar"></span> <span class = "bar"></span>
+              <span class = "bar"></span>
+            <div>
+            <ul class = "navbar__menu">
+              <li class = "navbar__item">
+                <a href = "#home" class = "navbar__links" id = "home-page">Home</a>
+              </li>
+              <li class = "navbar__item">
+                <a href = "#moreinfo" class = "navbar__links" id = "info-page">More Info</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+    </div>
+    
+    <p style = "font-family: Arial; font-size: 14; color: rgb(0, 0, 0)">Movable map initially centered on the <b>University of Massachusetts</b> Amherst, Massachusetts <i>(42.39139°N, -72.52611°E)</i></p>
+    <!-- Adds menu to select marker type-->
+    <label for="markerType" style="font-family: georgia; font-size: 14">Show Pins:</label>
+      <select id="markerType" style="margin: 10px; font-family: georgia; font-size: 14">
+        <option value="all">All</option>
+        <option value="Lost Items">Lost Items</option>
+        <option value="Suspicious Activity">Suspicious Activity</option>
+        <option value="Events">Events</option>
+      </select>
+    <!-- end of menu -->
+
+    <!-- Adds buttons to for placing pin type-->
+    <form action="/action_page.php">
+      <p>Which type of pin would you like to place?</p>
+      <input type="radio" id="option" name="pinType" value="Lost Item">
+      <label for="Lost Item">Lost Item</label>
+      <input type="radio" id="option" name="pinType" value="Suspicious Activity">
+      <label for="Suspicious Activity">Suspicious Activity</label>
+      <input type="radio" id="option" name="pinType" value="Event">
+      <label for="Event">Event</label>
+    </form>
+    <button onclick = "getSelectedOption()">Submit</button>
+    <p id="output"></p>
+    <!-- end of button -->
+
+    <br><div id="map"></div>
+    <h3>Code</h3>
+    <p>
+        The <code>map.setCenter()</code> method and <code>map.setZoom() </code>method are able to control the location of the map.<br>
+    </p>
+    <script defer type="text/javascript" src='script.js'></script>
+  </body>
+</html>
