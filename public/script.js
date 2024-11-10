@@ -161,6 +161,7 @@ function initializeMap() {
   // Load pins from database
   loadPins(markerManager);
 
+  pinIcon()
   // Enable click-to-place marker functionality
   markerManager.enableClickToPlaceMarker(null);
 }
