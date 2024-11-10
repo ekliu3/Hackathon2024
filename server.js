@@ -20,6 +20,7 @@ app.get('/api/config', (req, res) => {
 app.get('/api/pins', async (req, res) => {
     try {
         const pins = await Database.find('pins');
+        console.log(pins);
         res.json(pins);
     } catch (error) {
         console.error("Error fetching pins:", error);
@@ -27,12 +28,15 @@ app.get('/api/pins', async (req, res) => {
     }
 });
 
+
 // Endpoint to add a new pin to the database
 app.post('/api/pins', async (req, res) => {
-    const { lat, lng } = req.body;
+    
+    const { lat, lng, type } = req.body;
     const timestamp = new Date();
     try {
         const db = await Database.connect();
+        console.log("list collections", db.listCollections());
         const pinCount = await db.collection('pins').countDocuments();
         if (pinCount >= MAX_PINS) {
             // If we have more than or equal to MAX_PINS, delete the oldest pin
@@ -43,32 +47,33 @@ app.post('/api/pins', async (req, res) => {
               console.log("Oldest pin removed:", oldestPin[0]._id);
             }
           }
-        const newPin = await db.collection('pins').insertOne({ lat, lng});
+    
+        const newPin = await db.collection('pins').insertOne({ lat, lng, type});
         res.json(newPin);
+        
     } catch (error) {
         console.error("Error adding pin:", error);
         res.status(500).json({ error: "Failed to add pin" });
     }
+    // console.log("this is the type:" + type);
 });
-
-
-
-async function main() {
-    try {
-        // Retrieve all documents from the 'pins' collection
-        const pins = await Database.find('pins');
-        console.log("Pins from database:", pins);
-    } catch (error) {
-        console.error("Error in main function:", error);
-    } finally {
-        await Database.close();
-    }
-}
+    
+// async function main() {
+//     try {
+//         // Retrieve all documents from the 'pins' collection
+//         const pins = await Database.find('pins');
+//         console.log("Pins from database:", pins);
+//     } catch (error) {
+//         console.error("Error in main function:", error);
+//     } finally {
+//         await Database.close();
+//     }
+// }
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
   });
-main();
+// main();
 // Serve static files from the 'public' directory
 
 
