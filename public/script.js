@@ -64,8 +64,8 @@ class MarkerManager {
               evt.currentPointer.viewportX,
               evt.currentPointer.viewportY
           );
-          //const iconPath = null;
-          const iconPath = this.pinIcon()
+          const iconPath = null;
+        
           console.log(iconPath)
           this.placeMarker(coords.lat, coords.lng, iconPath);
           // Saves pin to database
